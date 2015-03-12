@@ -471,6 +471,7 @@ class Group(Model):
     description = Column(Text)
     canjoin = Column(Enum(*GROUP_JOIN_CHOICES), default="canask")
     enabled = Column(Boolean, default=True, nullable=False)
+    audited = Column(Boolean, default=False, nullable=False)
 
     @hybrid_property
     def name(self):
@@ -1166,6 +1167,8 @@ class Permission(Model):
     name = Column(String(length=64), unique=True, nullable=False)
     description = Column(Text, nullable=False)
     created_on = Column(DateTime, default=datetime.utcnow, nullable=False)
+    audited = Column(Boolean, default=False, nullable=False)
+    audit_interval = Column(Integer, nullable=False, default=90)
 
     @staticmethod
     def get(session, name=None):
